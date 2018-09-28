@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <title>Permut-Gen</title>
+        <style>
+                body{
+                        width:60%;
+                        margin: auto;
+                        text-align: center;
+                        margin-top:50px;
+                }
+                table{
+                        margin:auto;
+                }
+
+                .note{
+                        font-size: 8pt;
+                        color: #EEAA7B;
+                }
+
+                .show{
+                        display:block;
+                }
+
+        </style>
+        <script>
+                  function factorial(n) {
+			  var fact = 1;
+
+			  for ( var i = 2; i <= n; i++ ) {
+			    fact = fact * i;
+			  }
+
+			  return fact;
+                        }
+                        
+                        function fauxSubmit(){
+                                removeModal();
+                                document.forms['permuteForm'].submit();
+                        }
+
+                        function removeModal(){
+                                document.getElementById('myModal').classList.remove('show');
+                        }
+
+                function validateForm(){
+                        var nums=document.forms['permuteForm']['numInput'].value.split(",");
+                        var numsEven=[];
+                        var numsOdd=[];
+                        var even=document.forms['permuteForm']['even0'].value;
+                        var odd=document.forms['permuteForm']['odd0'].value;
+
+                        console.log(nums)
+                        
+                       
+
+                        
+                        for(var i=0;i<nums.length;i++){
+                                if(nums[i]%2==0){
+                                 numsEven.push(nums[i])
+                                }
+                                else 
+                                numsOdd.push(nums[i])
+                        }
+                     
+
+                         if(numsEven.length<even||numsOdd.length<odd){
+                                alert('ERROR:Not enough numbers in input');
+                                return false;
+                        }
+
+                        var amtTotal1=factorial(numsEven.length)/factorial(even)/factorial(numsEven.length-even);
+                        var amtTotal2=factorial(numsOdd.length)/factorial(odd)/factorial(numsOdd.length-odd);
+
+                            if((amtTotal1*amtTotal2)>50000){
+                                    console.log("here");
+                                document.getElementById('myModal').classList.add('show');
+                                return false;
+                            }
+
+                       
+                        
+                        alert('Validation passed!');
+                        document.forms['permuteForm'].submit();
+
+                        
+                }
+        </script>
+</head>
+<body>
+	<form name ='permuteForm' action="http://127.0.0.1:3030/generate" method="get" onsubmit="event.preventDefault(); validateForm();">
+		<textarea rows="10" cols="40" required placeholder="Enter Your Numbers Here" name="numInput"></textarea></br>
+                <div id="groupsOptionsPlaceholder">
+                        <table id='inputTable'>
+                                <tr>
+                                        <th>Even</th><th>Odd</th>
+                                </tr>
+                                <tr>
+                                        <td><input required name='even0' type='number'></td>
+                                        <td><input required name='odd0' type='number'></td>
+                                </tr>
+                        </table>
+                </div>
+                <input class='btn btn-primary' type="submit" name="" value="Generate!">
+                <p class='note'>*Please note that depending on the amount of results, generation might take some time.</br>Stopping the app will abort generation.</p>
+		
+        </form>
+        
+        <div class="modal hidden" tabindex="-1" role="dialog" id="myModal">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Modal title</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>The amount of results that is going to be generated exceeds 500,000,000 results and will take a long time to finish.
+                                      If you want to continue, override (not recommended) </p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick='removeModal()'>Cancel</button>
+                              <button type="button" class="btn btn-secondary" onclick="fauxSubmit() ">Override</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+</body>
+
+</html>

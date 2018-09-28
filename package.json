@@ -1,0 +1,38 @@
+{
+  "name": "electron-app",
+  "productName": "Permutation Generator",
+  "version": "1.0.0",
+  "description": "Simple app to compute permutations of set amount of numbers out of the even and odd parts of the input. ",
+  "main": "main.js",
+  "dependencies": {
+    "electron-progressbar": "^1.1.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.16.3",
+    "progress-bar": "^0.1.1"
+  },
+  "devDependencies": {
+    "electron": "^3.0.0",
+    "electron-packager": "^12.1.2"
+  },
+  "scripts": {
+    "start": "electron .  ",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64  --prune=true --out=release-builds",
+    "package-win": "electron-packager . electron-app --overwrite  --platform=win32 --arch=x64  --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Tutorial App\"",
+    "package-linux": "electron-packager . electron-app --overwrite --asar=true --platform=linux --arch=x64  --prune=true --out=release-builds"
+  },
+  "build": {
+    "asar": false,
+    "appId": "com.example.electron-app",
+    "files": [
+      "res/**/*",
+      "package.json"
+    ],
+    "extraFiles": [
+      "credentials",
+      "res/**/*"
+    ],
+    "publish": null
+  },
+  "author": "Anna Gavrilova",
+  "license": "ISC"
+}
