@@ -45,5 +45,5 @@ Application uses mathematical algorithms to generate all possible combinations o
 
 </table>
 
-#Tech
+# Tech
 Runs on Node server, wrapped in electron distributive using electron-packager
